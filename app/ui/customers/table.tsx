@@ -17,7 +17,8 @@ export default async function CustomersTable({
         Customers
       </h1>
       {/*<Search placeholder="Search customers..." />*/}
-      <Search />
+      {/*Agregué placeholder en la siguiente línea*/}
+      <Search  placeholder={''}/>
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
