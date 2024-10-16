@@ -1,7 +1,7 @@
 'use client';
 
-import { updateInvoice, State } from '@/app/lib/actions' // Add State
-import { useFormState } from 'react-dom'; // Add useFormState import
+import { updateInvoice, State } from '@/app/lib/actions'
+import { useFormState } from 'react-dom';
 import { CustomerField, InvoiceForm } from '@/app/lib/definitions'
 import {
   CheckIcon,
@@ -19,12 +19,11 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
-  const initialState: State = {message: null, errors: {}} // Add
+  const initialState: State = {message: null, errors: {}}
   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id)
   const [state, formAction] = useFormState(updateInvoiceWithId, initialState)
 
   return (
-    // <form action = {updateInvoiceWithId}>
     <form action = {formAction}>
       <input type='hidden' name='id' value={invoice.id}/>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -59,7 +58,6 @@ export default function EditInvoiceForm({
             ))}
           </div>
         </div>
-
         {/* Invoice Amount */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
