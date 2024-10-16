@@ -1,6 +1,9 @@
+'use client'
+
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { deleteInvoice } from '@/app/lib/actions'
+import Swal from 'sweetalert2';
 
 export function CreateInvoice() {
   return (
@@ -26,14 +29,40 @@ export function UpdateInvoice({ id }: { id: string }) {
 }
 
 export function DeleteInvoice({ id }: { id: string }) {
-  const deleteInvoiceWithId = deleteInvoice.bind(null, id)
+  const handleDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this invoice!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      customClass: {
+        confirmButton: 'swal2-confirm',
+        cancelButton: 'swal2-cancel'
+      },
+    });
+
+    if (confirmation.isConfirmed) {
+      try {
+        await deleteInvoice(id); // Llamar a la función para eliminar la factura
+        await Swal.fire("Deleted!", "The invoice has been deleted.", "success");
+      } catch (error) {
+        await Swal.fire("Error", "Database error: Failed to delete invoice.", "error");
+      }
+    } else {
+      await Swal.fire("Cancelled", "Your invoice is safe!", "info");
+    }
+  };
 
   return (
-    <form action={deleteInvoiceWithId}>
-      <button type='submit' className="rounded-md border p-2 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
-        <TrashIcon className="w-5" />
-      </button>
-    </form>
+      <form onSubmit={handleDelete}>
+        <button type='submit' className="rounded-md border p-2 hover:bg-gray-100">
+          <span className="sr-only">Delete</span>
+          <TrashIcon className="w-5" />
+        </button>
+      </form>
   );
 }
