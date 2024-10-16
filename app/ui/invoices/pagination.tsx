@@ -9,26 +9,21 @@ export default function Pagination({totalPages}: { totalPages: number }) {
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const currentPage = Number(searchParams.get('page')) || 1
-
     const createPageURL = (pageNumber: number | string) => {
         const params = new URLSearchParams(searchParams)
         params.set('page', pageNumber.toString())
         return `${pathname}?${params.toString()}`
     }
-
     // const allPages = generatePagination(currentPage, totalPages);
-
     return (
         <>
             {/* NOTE: comment in this code when you get to this point in the course */}
-
             {/* <div className='inline-flex'>
         <PaginationArrow
           direction='left'
           href={createPageURL(currentPage - 1)}
           isDisabled={currentPage <= 1}
         />
-
         <div className='flex -space-x-px'>
           {allPages.map((page, index) => {
             let position: 'first' | 'last' | 'single' | 'middle' | undefined;
@@ -49,7 +44,6 @@ export default function Pagination({totalPages}: { totalPages: number }) {
             );
           })}
         </div>
-
         <PaginationArrow
           direction='right'
           href={createPageURL(currentPage + 1)}
